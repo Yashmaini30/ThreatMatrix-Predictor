@@ -1,0 +1,103 @@
+columns:
+  - id: int64
+  - NumDots: int64
+  - SubdomainLevel: int64
+  - PathLevel: int64
+  - UrlLength: int64
+  - NumDash: int64
+  - NumDashInHostname: int64
+  - AtSymbol: int64
+  - TildeSymbol: int64
+  - NumUnderscore: int64
+  - NumPercent: int64
+  - NumQueryComponents: int64
+  - NumAmpersand: int64
+  - NumHash: int64
+  - NumNumericChars: int64
+  - NoHttps: int64
+  - RandomString: int64
+  - IpAddress: int64
+  - DomainInSubdomains: int64
+  - DomainInPaths: int64
+  - HttpsInHostname: int64
+  - HostnameLength: int64
+  - PathLength: int64
+  - QueryLength: int64
+  - DoubleSlashInPath: int64
+  - NumSensitiveWords: int64
+  - EmbeddedBrandName: int64
+  - PctExtHyperlinks: float64
+  - PctExtResourceUrls: float64
+  - ExtFavicon: int64
+  - InsecureForms: int64
+  - RelativeFormAction: int64
+  - ExtFormAction: int64
+  - AbnormalFormAction: int64
+  - PctNullSelfRedirectHyperlinks: float64
+  - FrequentDomainNameMismatch: int64
+  - FakeLinkInStatusBar: int64
+  - RightClickDisabled: int64
+  - PopUpWindow: int64
+  - SubmitInfoToEmail: int64
+  - IframeOrFrame: int64
+  - MissingTitle: int64
+  - ImagesOnlyInForm: int64
+  - SubdomainLevelRT: int64
+  - UrlLengthRT: int64
+  - PctExtResourceUrlsRT: int64
+  - AbnormalExtFormActionR: int64
+  - ExtMetaScriptLinkRT: int64
+  - PctExtNullSelfRedirectHyperlinksRT: int64
+  - CLASS_LABEL: int64
+
+numerical_columns:
+  - id
+  - NumDots
+  - SubdomainLevel
+  - PathLevel
+  - UrlLength
+  - NumDash
+  - NumDashInHostname
+  - AtSymbol
+  - TildeSymbol
+  - NumUnderscore
+  - NumPercent
+  - NumQueryComponents
+  - NumAmpersand
+  - NumHash
+  - NumNumericChars
+  - NoHttps
+  - RandomString
+  - IpAddress
+  - DomainInSubdomains
+  - DomainInPaths
+  - HttpsInHostname
+  - HostnameLength
+  - PathLength
+  - QueryLength
+  - DoubleSlashInPath
+  - NumSensitiveWords
+  - EmbeddedBrandName
+  - PctExtHyperlinks
+  - PctExtResourceUrls
+  - ExtFavicon
+  - InsecureForms
+  - RelativeFormAction
+  - ExtFormAction
+  - AbnormalFormAction
+  - PctNullSelfRedirectHyperlinks
+  - FrequentDomainNameMismatch
+  - FakeLinkInStatusBar
+  - RightClickDisabled
+  - PopUpWindow
+  - SubmitInfoToEmail
+  - IframeOrFrame
+  - MissingTitle
+  - ImagesOnlyInForm
+  - SubdomainLevelRT
+  - UrlLengthRT
+  - PctExtResourceUrlsRT
+  - AbnormalExtFormActionR
+  - ExtMetaScriptLinkRT
+  - PctExtNullSelfRedirectHyperlinksRT
+  - CLASS_LABEL
