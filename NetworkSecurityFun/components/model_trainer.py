@@ -23,6 +23,15 @@ from sklearn.ensemble import (
     GradientBoostingClassifier
 )
 import mlflow
+import dagshub
+from dotenv import load_dotenv
+load_dotenv()
+
+dagshub.init(
+    repo_owner=os.getenv("DAGSHUB_USERNAME"),
+    repo_name=os.getenv("DAGSHUB_REPO"),
+    mlflow=True,
+)
 
 
 class ModelTrainer:
