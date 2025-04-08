@@ -4,3 +4,5 @@ __pycache__
 logs/
 snapshots/
 artifact/
+mlruns/
+final_models
