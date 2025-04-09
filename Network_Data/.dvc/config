@@ -1,5 +1,0 @@
-[core]
-    remote = origin
-['remote "origin"']
-    url = https://dagshub.com/mainiyash2/ThreatMatrix-Predictor.dvc
-    auth = basic
