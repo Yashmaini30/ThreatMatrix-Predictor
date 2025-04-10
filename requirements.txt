@@ -10,5 +10,7 @@ dill
 mlflow
 dagshub
 dvc
+fastapi
+uvicorn
 
 ## -e .

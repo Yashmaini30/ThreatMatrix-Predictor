@@ -22,6 +22,8 @@ import pandas as pd
 
 from NetworkSecurityFun.utils.main_utils.utils import load_object
 
+from NetworkSecurityFun.utils.ml_utils.model.estimator import NetworkSecurityModel
+
 client=pymongo.MongoClient(mongo_db_url,tlsCAFile=ca)
 
 from NetworkSecurityFun.constants.training_pipeline import DATA_INGESTION_COLLECTION_NAME
@@ -41,6 +43,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi.templating import Jinja2Templates
+templates = Jinja2Templates(directory="./templates")
+
 @app.get("/", tags=["authentication"])
 async def index():
     return RedirectResponse(url="/docs")
@@ -54,5 +59,42 @@ async def train_route():
     except Exception as e:
         raise NetworkSecurityException(e, sys)
 
+@app.post("/predict")
+async def predict_route(request: Request, file: UploadFile = File(...)):
+    try:
+        df = pd.read_csv(file.file)
+
+        # Load objects
+        preprocessor = load_object("final_models/preprocessor.pkl")
+        final_model = load_object("final_models/model.pkl")
+        network_model = NetworkSecurityModel(preprocessor=preprocessor, model=final_model)
+
+        # Expected features by preprocessor
+        expected_columns = list(preprocessor.feature_names_in_)
+        actual_columns = list(df.columns)
+
+        # Debug: print for analysis
+        print("Expected columns by model:", expected_columns)
+        print("Columns in uploaded CSV:", actual_columns)
+
+        # Find intersection to avoid KeyError
+        missing_cols = [col for col in expected_columns if col not in df.columns]
+        if missing_cols:
+            raise ValueError(f"Missing required columns in input CSV: {missing_cols}")
+
+        df_for_pred = df[expected_columns].copy()
+
+        y_pred = network_model.predict(df_for_pred)
+
+        # Attach predictions to original df (don't overwrite any columns)
+        df['predicted_column'] = y_pred
+
+        df.to_csv('prediction_output/output.csv', index=False)
+        table_html = df.to_html(classes='table table-striped')
+        return templates.TemplateResponse("table.html", {"request": request, "table": table_html})
+
+    except Exception as e:
+        raise NetworkSecurityException(e, sys)
+    
 if __name__ == "__main__":
     app_run("app:app", host="0.0.0.0", port=8000, reload=True)
