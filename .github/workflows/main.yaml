@@ -21,3 +21,28 @@ jobs:
 
       - name: Run Unit Tests
         run: echo "Running Unit Test"
+
+    build-push-ecr-image:
+        name: Continuous Delivery
+        needs: integration
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v2
+            
+            - name: Install utilities
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y jq unzip
+
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: us-east-1
+                  
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v1
+
