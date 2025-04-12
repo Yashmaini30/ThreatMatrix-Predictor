@@ -62,3 +62,20 @@ jobs:
 
           echo "Pushing image to ECR"
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      git add- name: Cleanup old images from ECR
+        run: |
+          echo "Getting all image digests..."
+          all_digests=$(aws ecr list-images --repository-name $ECR_REPOSITORY --query 'imageIds[*].imageDigest' --output text)
+
+          echo "Getting latest image digest..."
+          latest_digest=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageDigest' --output text)
+
+          echo "Deleting old image digests..."
+          for digest in $all_digests; do
+            if [ "$digest" != "$latest_digest" ]; then
+              echo "Deleting imageDigest: $digest"
+              aws ecr batch-delete-image --repository-name $ECR_REPOSITORY --image-ids imageDigest=$digest
+            fi
+          done
+
