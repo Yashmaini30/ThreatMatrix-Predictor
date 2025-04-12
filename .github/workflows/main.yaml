@@ -47,7 +47,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR 
+      - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_LOGIN_URI }}
@@ -63,7 +63,10 @@ jobs:
           echo "Pushing image to ECR"
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      git add- name: Cleanup old images from ECR
+      - name: Cleanup old images from ECR
+        env:
+          ECR_REPOSITORY: ${{ secrets.ECR_REPO_NAME }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           echo "Getting all image digests..."
           all_digests=$(aws ecr list-images --repository-name $ECR_REPOSITORY --query 'imageIds[*].imageDigest' --output text)
@@ -78,4 +81,3 @@ jobs:
               aws ecr batch-delete-image --repository-name $ECR_REPOSITORY --image-ids imageDigest=$digest
             fi
           done
-
