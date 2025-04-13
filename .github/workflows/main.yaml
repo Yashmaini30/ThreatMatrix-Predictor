@@ -111,19 +111,19 @@ jobs:
           docker stop threatmatrix || true
           docker rm threatmatrix || true
 
-      - name: Run Container Image to serve users
-        run: |
-          docker run -d -p 8000:8000 --ipc="host" --name=threatmatrix \
-          -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' \
-          -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' \
-          -e 'AWS_REGION=${{ secrets.AWS_REGION }}' \
-          -e 'MONGO_DB_URL=${{ secrets.MONGO_DB_URL }}' \
-          -e 'DAGSHUB_USERNAME=${{ secrets.DAGSHUB_USERNAME }}' \
-          -e 'DAGSHUB_REPO=${{ secrets.DAGSHUB_REPO }}' \
-          -e 'DAGSHUB_PASSWORD=${{ secrets.DAGSHUB_PASSWORD }}' \
-          -e 'TRAINING_BUCKET_NAME=${{ secrets.TRAINING_BUCKET_NAME }}' \
-          ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
-
+          - name: Run Container Image to serve users
+          run: |
+            docker run -d -p 8000:8000 --ipc="host" --name=threatmatrix \
+            -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+            -e AWS_REGION=${{ secrets.AWS_REGION }} \
+            -e MONGO_DB_URL=${{ secrets.MONGO_DB_URL }} \
+            -e DAGSHUB_USERNAME=${{ secrets.DAGSHUB_USERNAME }} \
+            -e DAGSHUB_REPO=${{ secrets.DAGSHUB_REPO }} \
+            -e DAGSHUB_PASSWORD=${{ secrets.DAGSHUB_PASSWORD }} \
+            -e TRAINING_BUCKET_NAME=${{ secrets.TRAINING_BUCKET_NAME }} \
+            ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
+            
       - name: Clean previous images and container
         run: | 
           docker system prune -a -f
