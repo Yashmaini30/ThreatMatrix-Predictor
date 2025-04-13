@@ -113,7 +113,7 @@ jobs:
 
       - name: Run Container Image to serve users
         run: |
-          docker run -d -p 5000:5000 --ipc="host" --name=threatmatrix \
+          docker run -d -p 8080:8080 --ipc="host" --name=threatmatrix \
           -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' \
           -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' \
           -e 'AWS_REGION=${{ secrets.AWS_REGION }}' \
