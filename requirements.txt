@@ -12,5 +12,6 @@ dagshub
 dvc
 fastapi
 uvicorn
+python-multipart
 
 ## -e .

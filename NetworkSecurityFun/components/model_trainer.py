@@ -28,9 +28,11 @@ import dagshub
 from dotenv import load_dotenv
 load_dotenv()
 
+dagshub.auth.add_app_token(os.getenv("DAGSHUB_AUTH_TOKEN"))
+
 dagshub.init(
-    repo_owner="mainiyash2", 
-    repo_name="ThreatMatrix-Predictor", 
+    repo_owner=os.getenv("DAGSHUB_USERNAME"), 
+    repo_name=os.getenv("DAGSHUB_REPO"), 
     mlflow=True
 )
 
