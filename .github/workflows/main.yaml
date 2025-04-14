@@ -1,123 +1,126 @@
-# name: workflow
+name: workflow
 
-# on:
-#   push:
-#     branches:
-#       - main
-#     paths-ignore:
-#       - 'README.md'
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
 
-# jobs:
-#   integration:
-#     name: Continuous Integration
-#     runs-on: ubuntu-latest
+jobs:
+  integration:
+    name: Continuous Integration
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-#       - name: Lint Code
-#         run: echo "Linting Code Repository"
+      - name: Lint Code
+        run: echo "Linting Code Repository"
 
-#       - name: Run Unit Tests
-#         run: echo "Running Unit Test"
+      - name: Run Unit Tests
+        run: echo "Running Unit Test"
 
-#   build-push-ecr-image:
-#     name: Continuous Delivery
-#     needs: integration
-#     runs-on: ubuntu-latest
+  build-push-ecr-image:
+    name: Continuous Delivery
+    needs: integration
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-#       - name: Install utilities
-#         run: |
-#           sudo apt-get update
-#           sudo apt-get install -y jq unzip
+      - name: Install utilities
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq unzip
 
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: ${{ secrets.AWS_REGION }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-#       - name: Login to Amazon ECR
-#         id: login-ecr
-#         uses: aws-actions/amazon-ecr-login@v1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-#       - name: Build, tag, and push image to Amazon ECR
-#         id: build-image
-#         env:
-#           ECR_REGISTRY: ${{ secrets.AWS_ECR_LOGIN_URI }}
-#           ECR_REPOSITORY: ${{ secrets.ECR_REPO_NAME }}
-#           IMAGE_TAG: ${{ github.sha }}
-#         run: |
-#           echo "Building Docker image"
-#           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ secrets.AWS_ECR_LOGIN_URI }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPO_NAME }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          echo "Building Docker image"
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
 
-#           echo "Pushing image to ECR"
-#           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "Pushing image to ECR"
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-#       - name: Cleanup old images from ECR
-#         env:
-#           ECR_REPOSITORY: ${{ secrets.ECR_REPO_NAME }}
-#           AWS_REGION: ${{ secrets.AWS_REGION }}
-#         run: |
-#           echo "Getting all image digests..."
-#           all_digests=$(aws ecr list-images --repository-name $ECR_REPOSITORY --query 'imageIds[*].imageDigest' --output text)
+      - name: Cleanup old images from ECR
+        env:
+          ECR_REPOSITORY: ${{ secrets.ECR_REPO_NAME }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          echo "Getting all image digests..."
+          all_digests=$(aws ecr list-images --repository-name $ECR_REPOSITORY --query 'imageIds[*].imageDigest' --output text)
 
-#           echo "Getting latest image digest..."
-#           latest_digest=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageDigest' --output text)
+          echo "Getting latest image digest..."
+          latest_digest=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageDigest' --output text)
 
-#           echo "Deleting old image digests..."
-#           for digest in $all_digests; do
-#             if [ "$digest" != "$latest_digest" ]; then
-#               echo "Deleting imageDigest: $digest"
-#               aws ecr batch-delete-image --repository-name $ECR_REPOSITORY --image-ids imageDigest=$digest
-#             fi
-#           done
+          echo "Deleting old image digests..."
+          for digest in $all_digests; do
+            if [ "$digest" != "$latest_digest" ]; then
+              echo "Deleting imageDigest: $digest"
+              aws ecr batch-delete-image --repository-name $ECR_REPOSITORY --image-ids imageDigest=$digest
+            fi
+          done
 
-#   Continuous-Deployment:
-#     needs: build-push-ecr-image
-#     runs-on: self-hosted
+  Continuous-Deployment:
+    needs: build-push-ecr-image
+    runs-on: self-hosted
 
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: ${{ secrets.AWS_REGION }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-#       - name: Login to Amazon ECR
-#         run: |
-#           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
-#           docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_LOGIN_URI }}
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+          docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_LOGIN_URI }}
 
-#       - name: Pull Latest Image
-#         run: |
-#           docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
+      - name: Pull Latest Image
+        run: |
+          docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
 
-#       - name: Stop and Remove Existing Container
-#         run: |
-#           docker stop threatmatrix || true
-#           docker rm threatmatrix || true
+      - name: Stop and Remove Existing Container
+        run: |
+          docker stop threatmatrix || true
+          docker rm threatmatrix || true
 
-#       - name: Run Container Image to Serve Users
-#         run: |
-#           docker run -d -p 8000:8000 --ipc="host" --name=threatmatrix \
-#           -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-#           -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-#           -e AWS_REGION=${{ secrets.AWS_REGION }} \
-#           -e MONGO_DB_URL=${{ secrets.MONGO_DB_URL }} \
-#           -e TRAINING_BUCKET_NAME=${{ secrets.TRAINING_BUCKET_NAME }} \
-#           ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
+      - name: Run Container Image to Serve Users
+        run: |
+          docker run -d -p 8000:8000 --ipc="host" --name=threatmatrix \
+          -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+          -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+          -e AWS_REGION=${{ secrets.AWS_REGION }} \
+          -e MONGO_DB_URL=${{ secrets.MONGO_DB_URL }} \
+          -e DAGSHUB_USERNAME=${{ secrets.DAGSHUB_USERNAME }} \
+          -e DAGSHUB_REPO=${{ secrets.DAGSHUB_REPO }} \
+          -e DAGSHUB_AUTH_TOKEN=${{ secrets.DAGSHUB_AUTH_TOKEN }} \
+          -e TRAINING_BUCKET_NAME=${{ secrets.TRAINING_BUCKET_NAME }} \
+          ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
 
-#       - name: Clean Previous Images and Containers
-#         run: |
-#           docker system prune -a -f  # Cleans up old containers and images
+      - name: Clean Previous Images and Containers
+        run: |
+          docker system prune -a -f  # Cleans up old containers and images
