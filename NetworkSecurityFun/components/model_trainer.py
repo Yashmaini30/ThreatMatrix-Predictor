@@ -29,11 +29,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 dagshub.init(
-    repo_owner=os.getenv("DAGSHUB_USERNAME"),
-    repo_name=os.getenv("DAGSHUB_REPO"),
+    repo_owner="mainiyash2", 
+    repo_name="ThreatMatrix-Predictor", 
     mlflow=True
 )
-
 
 class ModelTrainer:
     def __init__(self, model_trainer_config: ModelTrainerConfig, data_transformation_artifact: DataTransformationArtifact):
