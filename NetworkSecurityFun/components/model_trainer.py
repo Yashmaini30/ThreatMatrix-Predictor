@@ -31,7 +31,6 @@ dagshub.init(
     repo_owner=os.getenv("DAGSHUB_USERNAME"),
     repo_name=os.getenv("DAGSHUB_REPO"),
     mlflow=True,
-    auth_token=os.getenv("DAGSHUB_PASSWORD")
 )
 
 

@@ -117,7 +117,7 @@ jobs:
           -e MONGO_DB_URL=${{ secrets.MONGO_DB_URL }} \
           -e DAGSHUB_USERNAME=${{ secrets.DAGSHUB_USERNAME }} \
           -e DAGSHUB_REPO=${{ secrets.DAGSHUB_REPO }} \
-          -e DAGSHUB_PASSWORD=${{ secrets.DAGSHUB_PASSWORD }} \
+          -e DAGSHUB_AUTH_TOKEN=${{ secrets.DAGSHUB_AUTH_TOKEN }} \
           -e TRAINING_BUCKET_NAME=${{ secrets.TRAINING_BUCKET_NAME }} \
           ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
 
