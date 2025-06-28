@@ -385,8 +385,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ⭐ **Star this repository if you found it helpful!**
 
-🔗 **Connect with me**: [LinkedIn](www.linkedin.com/in/yash-maini-369869198) 
-
+🔗 **Connect with me:** [LinkedIn](https://www.linkedin.com/in/yash-maini-369869198)
 ---
 
 *Built with ❤️ by Yash*

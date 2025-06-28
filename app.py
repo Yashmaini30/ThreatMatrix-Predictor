@@ -1,4 +1,3 @@
-print("app.py starting")
 import sys
 import os
 
@@ -70,15 +69,12 @@ async def predict_route(request: Request, file: UploadFile = File(...)):
         final_model = load_object("final_models/model.pkl")
         network_model = NetworkSecurityModel(preprocessor=preprocessor, model=final_model)
 
-        # Expected features by preprocessor
         expected_columns = list(preprocessor.feature_names_in_)
         actual_columns = list(df.columns)
 
-        # Debug: print for analysis
         print("Expected columns by model:", expected_columns)
         print("Columns in uploaded CSV:", actual_columns)
 
-        # Find intersection to avoid KeyError
         missing_cols = [col for col in expected_columns if col not in df.columns]
         if missing_cols:
             raise ValueError(f"Missing required columns in input CSV: {missing_cols}")
@@ -87,7 +83,6 @@ async def predict_route(request: Request, file: UploadFile = File(...)):
 
         y_pred = network_model.predict(df_for_pred)
 
-        # Attach predictions to original df (don't overwrite any columns)
         df['predicted_column'] = y_pred
 
         df.to_csv('prediction_output/output.csv', index=False)
