@@ -1,103 +1,66 @@
 columns:
-  - id: int64
-  - NumDots: int64
-  - SubdomainLevel: int64
-  - PathLevel: int64
-  - UrlLength: int64
-  - NumDash: int64
-  - NumDashInHostname: int64
-  - AtSymbol: int64
-  - TildeSymbol: int64
-  - NumUnderscore: int64
-  - NumPercent: int64
-  - NumQueryComponents: int64
-  - NumAmpersand: int64
-  - NumHash: int64
-  - NumNumericChars: int64
-  - NoHttps: int64
-  - RandomString: int64
-  - IpAddress: int64
-  - DomainInSubdomains: int64
-  - DomainInPaths: int64
-  - HttpsInHostname: int64
-  - HostnameLength: int64
-  - PathLength: int64
-  - QueryLength: int64
-  - DoubleSlashInPath: int64
-  - NumSensitiveWords: int64
-  - EmbeddedBrandName: int64
-  - PctExtHyperlinks: float64
-  - PctExtResourceUrls: float64
-  - ExtFavicon: int64
-  - InsecureForms: int64
-  - RelativeFormAction: int64
-  - ExtFormAction: int64
-  - AbnormalFormAction: int64
-  - PctNullSelfRedirectHyperlinks: float64
-  - FrequentDomainNameMismatch: int64
-  - FakeLinkInStatusBar: int64
-  - RightClickDisabled: int64
-  - PopUpWindow: int64
-  - SubmitInfoToEmail: int64
-  - IframeOrFrame: int64
-  - MissingTitle: int64
-  - ImagesOnlyInForm: int64
-  - SubdomainLevelRT: int64
-  - UrlLengthRT: int64
-  - PctExtResourceUrlsRT: int64
-  - AbnormalExtFormActionR: int64
-  - ExtMetaScriptLinkRT: int64
-  - PctExtNullSelfRedirectHyperlinksRT: int64
-  - CLASS_LABEL: int64
+  - having_IP_Address: int64
+  - URL_Length: int64
+  - Shortining_Service: int64
+  - having_At_Symbol: int64
+  - double_slash_redirecting: int64
+  - Prefix_Suffix: int64
+  - having_Sub_Domain: int64
+  - SSLfinal_State: int64
+  - Domain_registeration_length: int64
+  - Favicon: int64
+  - port: int64
+  - HTTPS_token: int64
+  - Request_URL: int64
+  - URL_of_Anchor: int64
+  - Links_in_tags: int64
+  - SFH: int64
+  - Submitting_to_email: int64
+  - Abnormal_URL: int64
+  - Redirect: int64
+  - on_mouseover: int64
+  - RightClick: int64
+  - popUpWidnow: int64
+  - Iframe: int64
+  - age_of_domain: int64
+  - DNSRecord: int64 
+  - web_traffic: int64
+  - Page_Rank: int64
+  - Google_Index: int64
+  - Links_pointing_to_page: int64
+  - Statistical_report: int64
+  - Result: int64
+
 
 numerical_columns:
-  - id
-  - NumDots
-  - SubdomainLevel
-  - PathLevel
-  - UrlLength
-  - NumDash
-  - NumDashInHostname
-  - AtSymbol
-  - TildeSymbol
-  - NumUnderscore
-  - NumPercent
-  - NumQueryComponents
-  - NumAmpersand
-  - NumHash
-  - NumNumericChars
-  - NoHttps
-  - RandomString
-  - IpAddress
-  - DomainInSubdomains
-  - DomainInPaths
-  - HttpsInHostname
-  - HostnameLength
-  - PathLength
-  - QueryLength
-  - DoubleSlashInPath
-  - NumSensitiveWords
-  - EmbeddedBrandName
-  - PctExtHyperlinks
-  - PctExtResourceUrls
-  - ExtFavicon
-  - InsecureForms
-  - RelativeFormAction
-  - ExtFormAction
-  - AbnormalFormAction
-  - PctNullSelfRedirectHyperlinks
-  - FrequentDomainNameMismatch
-  - FakeLinkInStatusBar
-  - RightClickDisabled
-  - PopUpWindow
-  - SubmitInfoToEmail
-  - IframeOrFrame
-  - MissingTitle
-  - ImagesOnlyInForm
-  - SubdomainLevelRT
-  - UrlLengthRT
-  - PctExtResourceUrlsRT
-  - AbnormalExtFormActionR
-  - ExtMetaScriptLinkRT
-  - PctExtNullSelfRedirectHyperlinksRT
-  - CLASS_LABEL
+  - having_IP_Address
+  - URL_Length
+  - Shortining_Service
+  - having_At_Symbol
+  - double_slash_redirecting
+  - Prefix_Suffix
+  - having_Sub_Domain
+  - SSLfinal_State
+  - Domain_registeration_length
+  - Favicon
+  - port
+  - HTTPS_token
+  - Request_URL
+  - URL_of_Anchor
+  - Links_in_tags 
+  - SFH
+  - Submitting_to_email
+  - Abnormal_URL
+  - Redirect
+  - on_mouseover
+  - RightClick
+  - popUpWidnow
+  - Iframe
+  - age_of_domain
+  - DNSRecord 
+  - web_traffic
+  - Page_Rank
+  - Google_Index
+  - Links_pointing_to_page
+  - Statistical_report
+  - Result
