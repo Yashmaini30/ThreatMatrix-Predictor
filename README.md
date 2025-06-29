@@ -379,7 +379,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📖 **Documentation**: Check the wiki for detailed guides
 - 🐛 **Bug Reports**: Use GitHub issues with the bug template
 - 💡 **Feature Requests**: Use GitHub issues with the enhancement template
-- 💬 **Discussions**: Join our community discussions
+- 💬 **Discussions**: Join our community discussion
 
 ---
 
