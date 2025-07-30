@@ -6,6 +6,10 @@ Production-ready MLOps platform for network security threat detection using mach
 
 A sophisticated threat detection system that analyzes network security data to predict and classify potential threats using advanced machine learning algorithms. Built with enterprise-grade MLOps practices including automated pipelines, comprehensive monitoring, and scalable cloud deployment.
 
+* 🔗 **Blog**: [ThreatMatrix: Building a Production-Ready MLOps-Powered Intrusion Detection System](https://mlops-threat-detection-platform.hashnode.dev/building-a-production-ready-mlops-platform-for-network-security-threat-detection)
+* 🎥 **Demo Video**: [Watch on Vimeo](https://vimeo.com/1102706272)
+
+---
 ## 🎯 Key Features
 
 - 🧠 **Intelligent Threat Detection**: Advanced ML algorithms for network security analysis
